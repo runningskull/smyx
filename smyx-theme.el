@@ -51,7 +51,7 @@
       (smyx-bg+3 "#585858")
 
       (smyx-red+1 "#992222")
-     (smyx-red "#FAB1AB")
+      (smyx-red "#FAB1AB")
       (smyx-red-1 "#FAB1AB")
       (smyx-red-2 "#FAB1AB")
       (smyx-red-3 "#FAB1AB")
@@ -138,7 +138,12 @@
    `(highlight ((,class (:background ,smyx-gray-8))))
 
    ;;; highlight current line
-   `(hl-line ((,class (:background ,smyx-bg+2))))
+   `(hl-line ((,class (:background ,smyx-bg+1))))
+
+   ;;; hideshow
+   `(hs-face ((t (:background ,smyx-black-3 :foreground ,smyx-yellow-2 :weight bold :slant oblique :box (:line-width -1 :color ,smyx-black-3) :font "Hack-10"))))
+   `(hs-fringe-face ((t (:foreground ,smyx-gray))))
+   `(hideshowvis-hidable-face ((t (:foreground ,smyx-gray))))
    
    ;;; compilation
    `(compilation-column-face ((,class (:foreground ,smyx-blue))))
@@ -180,7 +185,8 @@
    `(minibuffer-prompt ((,class (:foreground ,smyx-green+1 :background ,smyx-black))))
    `(mode-line
      ((,class (:foreground ,smyx-blue ;;; dominant
-                           :background ,smyx-black-2))))
+                           :background ,smyx-black-2
+                           :box (:line-width 1 :style released-button)))))
    ;; `(mode-line-buffer-id ((,class (:foreground ,smyx-yellow :weight bold))))
 
    `(mode-line-inactive
@@ -197,8 +203,8 @@
    `(font-lock-comment-face ((,class (:foreground ,smyx-gray-9 :italic t))))
    ;; `(font-lock-comment-delimiter-face ((,class (:foreground ,smyx-green)))) 
    `(font-lock-constant-face ((,class (:foreground ,smyx-red))))
-   ;; `(font-lock-doc-face ((,class (:foreground ,smyx-green+0))))
-   `(font-lock-doc-string-face ((,class (:foreground ,smyx-yellow))))
+   `(font-lock-doc-face ((,class (:foreground ,smyx-gray-9))))
+   `(font-lock-doc-string-face ((,class (:foreground ,smyx-gray-9))))
    `(font-lock-function-name-face ((,class (:foreground ,smyx-blue))))
    `(font-lock-keyword-face ((,class (:foreground ,smyx-green))))
    `(font-lock-negation-char-face ((,class (:foreground ,smyx-red))))
@@ -763,6 +769,19 @@
 (when load-file-name
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory (file-name-directory load-file-name))))
+
+
+
+(defun smyx--minibuffer ()
+  (make-local-variable 'face-remapping-alist)
+  (add-to-list 'face-remapping-alist '(default (:background "#484848")))
+  (add-to-list 'face-remapping-alist '(fringe (:background "#484848"))))
+
+(add-hook 'minibuffer-setup-hook
+	        'smyx--minibuffer)
+
+
+
 
 (provide-theme 'smyx)
 
